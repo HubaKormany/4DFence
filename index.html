@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4DFence — Diplomarbeit HTL Rennweg</title>
+<meta name="description" content="4DFence: Implementierung einer modernen, sicheren Netzwerkinfrastruktur. Diplomarbeit der HTL Wien 3 Rennweg, Schuljahr 2026/27.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+  /* Theme so früh wie möglich setzen, damit die Seite nicht kurz im falschen Modus aufblitzt */
+  (function(){
+    var saved = localStorage.getItem('4dfence-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+</head>
+<body>
+
+<div class="grid-overlay" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="brand">
+      <img src="assets/4dfence-logo.png" alt="4DFence Logo" class="brand-mark">
+      <span>4DFence</span>
+    </a>
+    <nav class="main-nav">
+      <a href="#projekt">Projekt</a>
+      <a href="#ziele">Ziele</a>
+      <a href="#architektur">Architektur</a>
+      <a href="#team">Team</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Zwischen Dark Mode und Light Mode wechseln" aria-pressed="false">
+      <svg class="icon-moon" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M17 11.5A7.5 7.5 0 018.5 3 7.5 7.5 0 1017 11.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M10 1.5v2.4M10 16.1v2.4M18.5 10h-2.4M3.9 10H1.5M15.9 4.1l-1.7 1.7M5.8 14.2l-1.7 1.7M15.9 15.9l-1.7-1.7M5.8 5.8L4.1 4.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-text">
+      <p class="hero-kicker">Diplomarbeit · HTL Wien 3 Rennweg · Schuljahr 2026/27</p>
+      <h1>Eine Unternehmensinfrastruktur,<br>die sich selbst verteidigt.</h1>
+      <p class="hero-lead">4DFence plant, implementiert und prüft eine praxisnahe Netzwerktopologie auf Basis von Cisco UCS — mit Segmentierung, zentraler Verwaltung, Angriffserkennung und automatisierter Reaktion. Zwölf Hauptziele, vier optionale Ziele, ein durchgängiges Sicherheitskonzept.</p>
+      <div class="hero-actions">
+        <a href="#ziele" class="btn btn-primary">Die Ziele ansehen</a>
+        <a href="#team" class="btn btn-ghost">Zum Team</a>
+      </div>
+    </div>
+    <div class="hero-diagram" role="img" aria-label="Schema der Netzwerktopologie mit Internet, Perimeterschutz, UCS-Kern und den Sicherheitsmodulen Sandbox, SOAR, WLAN und WAF">
+      <img src="assets/4dfence-logo.png" alt="4DFence Logo" class="footer-logo">
+	  <img src="assets/coming_soon.png" alt="4DFence Logo">
+    </div>
+  </section>
+
+  <!-- PROJEKT / ABSTRACT -->
+  <section id="projekt" class="section wrap">
+    <div class="section-head">
+      <span class="section-index">§1</span>
+      <h2>Projektbeschreibung</h2>
+    </div>
+    <div class="prose-grid">
+      <p>Die Diplomarbeit verfolgt das Ziel, eine umfassende und praxisnahe Netzwerktopologie für ein beispielhaftes Unternehmensszenario zu planen, zu implementieren und sicherheitstechnisch abzusichern. Es entsteht eine moderne Unternehmensumgebung, in der Netzwerk-, Verwaltungs- und Sicherheitslösungen kombiniert und unter realitätsnahen Bedingungen eingesetzt werden. Die technische Umsetzung der virtualisierten Infrastruktur erfolgt auf Basis von Cisco Systems UCS.</p>
+      <p>Die geplante Umgebung umfasst typische Komponenten eines Unternehmensnetzwerks: Netzwerksegmentierung, zentrale Benutzer- und Rechteverwaltung, sichere Standortvernetzung sowie Überwachung und Analyse des Netzwerkverkehrs. Ergänzt wird das Konzept durch Systeme zur Erkennung, Protokollierung und Reaktion auf sicherheitsrelevante Ereignisse sowie Schutzmechanismen für Endgeräte, Webanwendungen, E-Mail-Kommunikation und drahtlose Netzwerke.</p>
+      <p>Ein weiterer Schwerpunkt liegt auf modernen Sicherheitskonzepten innerhalb des Unternehmensszenarios: Zugriffskontrolle, automatisierte Sicherheitsprozesse, Zero-Trust-Ansätze sowie die Absicherung öffentlich erreichbarer Dienste in getrennten Netzwerkbereichen. Im Anschluss an die Implementierung werden Angriffs- und Testszenarien durchgeführt, um die Wirksamkeit der Maßnahmen nachvollziehbar zu dokumentieren.</p>
+    </div>
+  </section>
+
+  <!-- ZIELE -->
+  <section id="ziele" class="section wrap">
+    <div class="section-head">
+      <span class="section-index">§2</span>
+      <h2>Ziele</h2>
+    </div>
+    <p class="section-intro">Zwölf Hauptziele bilden das verpflichtende Fundament der Arbeit, von der virtuellen Laborumgebung bis zu den Zertifizierungsprüfungen. Vier weitere Ziele werden optional umgesetzt, abhängig vom Projektfortschritt.</p>
+
+    <h3 class="goal-group-title">Hauptziele</h3>
+    <div class="goal-list">
+
+      <details class="goal" open>
+        <summary>
+          <span class="goal-code">H1</span>
+          <span class="goal-title">Aufbau der virtuellen Laborumgebung</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Auf dem UCS-Server entsteht eine virtuelle Laborumgebung, in der alle benötigten Netzwerk- und Security-Komponenten integriert und betrieben werden. Diese Umgebung bildet die Grundlage für alle weiteren Ziele.</p>
+          <ul>
+            <li>Bereitstellung und Konfiguration der virtuellen Maschinen auf dem UCS-Server</li>
+            <li>Integration der benötigten Netzwerk- und Security-Systeme (z. B. Firewall, Server, Clients)</li>
+            <li>Einbindung der erforderlichen Images und Installationsdateien</li>
+            <li>Aufbau einer funktionierenden virtuellen Netzwerk-Topologie</li>
+            <li>Sicherstellung der Konnektivität zwischen allen Systemen</li>
+            <li>Erstellung von Snapshots bzw. Backups der Grundinstallation</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H2</span>
+          <span class="goal-title">Active Directory (AD)</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Ein Active-Directory-System übernimmt die zentrale Benutzer- und Rechteverwaltung innerhalb der virtuellen Laborumgebung. Folgende Features werden mindestens einmal implementiert:</p>
+          <ul>
+            <li>Zentrale Benutzer- und Gruppenverwaltung mit Sicherheitsgruppen und RBAC</li>
+            <li>Group Policies (GPOs) mindestens für Browser, Passwörter und Firewall</li>
+            <li>OU-Struktur mit Trennung mindestens nach Standorten und Accounts</li>
+            <li>DNS integriert ins AD</li>
+            <li>Redundante Domain Controller: mindestens 2 Domain Controller in mindestens 1 Standort</li>
+            <li>Tiering / getrennte Admin-Konten</li>
+            <li>LAPS</li>
+            <li>Audit Logging &amp; Monitoring</li>
+            <li>Passwort- und Accountschutz</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H3</span>
+          <span class="goal-title">Netzwerksegmentierung und Zugriffskontrolle</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Die Netzwerktopologie wird durch Zugriffskontrolle und Segmentierung abgesichert. ACLs, Firewall-Regeln und Richtlinien steuern den Datenverkehr zwischen den Netzwerkbereichen gezielt und verhindern unautorisierte Zugriffe.</p>
+          <ul>
+            <li>Sinnvolle VLAN-Setzung</li>
+            <li>ACLs zur Zugriffssteuerung</li>
+            <li>Implementierung nach dem Least-Privilege-Prinzip</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H4</span>
+          <span class="goal-title">Next-Generation Firewall und VPN</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Eine Next-Generation Firewall (FortiGate) schützt die Infrastruktur vor externen Bedrohungen; VPN-Technologien sichern die Kommunikation zwischen mehreren Standorten ab. Folgende Features werden mindestens einmal implementiert:</p>
+          <ul>
+            <li>Web Filtering</li>
+            <li>Intrusion Prevention System (IPS)</li>
+            <li>SSL Inspection</li>
+            <li>DoS Protection</li>
+            <li>Antivirus Scanning</li>
+            <li>Data Leak Prevention (DLP)</li>
+            <li>Einrichtung und Absicherung von VPN-Verbindungen zwischen den Standorten</li>
+            <li>Zugriffskontrolle und Verschlüsselung des standortübergreifenden Datenverkehrs mit VPN</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H5</span>
+          <span class="goal-title">Monitoring / Security Information and Event Management (SIEM)</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Ein Monitoring-System — im Aufbau einem SIEM ähnlich — sammelt, protokolliert und visualisiert sicherheitsrelevante Ereignisse zentral.</p>
+          <ul>
+            <li>Logs zentral sammeln</li>
+            <li>Logs von verschiedenen Quellen auswerten</li>
+            <li>Zusammenarbeit mit EDR und NDR</li>
+            <li>Vordefinierte Ereignisse (z. B. mehrfach fehlerhafte Logins) bei Eintreten aufzeigen</li>
+            <li>Visualisierung, etwa durch Reports</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H6</span>
+          <span class="goal-title">Endpoint Detection &amp; Response (EDR)</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Eine EDR-Lösung überwacht und wertet sicherheitsbedrohende Aktivitäten auf Endgeräten aus. Playbooks behandeln erkannte Anomalien mit passenden Reaktionen.</p>
+          <ul>
+            <li>Überwachung ausgewählter Endgeräte</li>
+            <li>Erkennung von sicherheitsrelevanten Ereignissen</li>
+            <li>Protokollierung und zentrale Darstellung von Events</li>
+            <li>Definition und Umsetzung einfacher Reaktionsmechanismen (Playbooks)</li>
+            <li>Testen ausgewählter Angriffsszenarien im Labor</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H7</span>
+          <span class="goal-title">Network Detection &amp; Response (NDR)</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Eine NDR-Lösung analysiert den Netzwerkverkehr und erkennt sicherheitsrelevante Aktivitäten. NDR arbeitet mit dem SIEM zusammen, um Logs auszuwerten und das Netzwerk abzuhärten.</p>
+          <ul>
+            <li>Überwachung des Netzwerkverkehrs in ausgewählten Segmenten</li>
+            <li>Erkennung auffälliger oder potenziell schädlicher Netzwerkaktivitäten</li>
+            <li>Bereitstellung von Netzwerk-Logs für Analyse und Auswertung</li>
+            <li>Unterstützung der Zusammenarbeit mit dem SIEM-System</li>
+            <li>Durchführung von Tests anhand definierter Netzwerkszenarien</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H8</span>
+          <span class="goal-title">Network Access Control (NAC)</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Eine NAC-Lösung kontrolliert den Netzwerkzugriff und lässt nur autorisierte Geräte und Benutzer zu — für höhere Netzwerksicherheit und weniger unbefugten Zugriff.</p>
+          <ul>
+            <li>Geräteauthentifizierung: Prüfung und Registrierung aller Endgeräte vor dem Netzwerkzugriff</li>
+            <li>Benutzerautorisierung: Zugriffsrechte nach Benutzerrollen und Berechtigungen</li>
+            <li>Netzwerksegmentierung: Trennung von Geräten in unterschiedliche Netzwerkbereiche</li>
+            <li>Überwachung und Protokollierung: laufende Kontrolle aller Zugriffe sowie Dokumentation von Anmelde- und Sicherheitsereignissen</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H9</span>
+          <span class="goal-title">Demilitarized Zone (DMZ)</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Im Headquarter (HQ) trennt eine DMZ Dienste, die in der Realität öffentlich erreichbar wären, vom internen Unternehmensnetzwerk. Sie dient als isolierter Bereich für externe Services und Systeme.</p>
+          <ul>
+            <li>Hauptserver: Web, DNS, FTP</li>
+            <li>Bastion-Host-Server</li>
+            <li>Mail-Server mit FortiMail</li>
+            <li>Mikrosegmentierung innerhalb der DMZ — Server und Dienste voneinander isoliert</li>
+            <li>Bereitstellung nach außen</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H10</span>
+          <span class="goal-title">Angriffs-/Testszenarien sowie Dokumentation</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Alle implementierten Features werden durch Angriffs- und Testszenarien überprüft. Für jedes Feature wird mindestens ein Szenario umgesetzt, die Durchführung und die Ergebnisse werden dokumentiert.</p>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H11</span>
+          <span class="goal-title">NSE 4 – FortiOS Administrator</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Alle vier Teammitglieder treten zur Fortinet-Zertifizierungsprüfung NSE 4 – FortiOS Administrator an.</p>
+          <ul>
+            <li>Tobias Kalman</li>
+            <li>Huba Kormany</li>
+            <li>Eliah Haneder</li>
+            <li>Florian Iser</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">H12</span>
+          <span class="goal-title">NSE 5 – Secure Wireless LAN Administrator</span>
+          <span class="goal-status">verpflichtend</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Alle vier Teammitglieder treten zur Fortinet-Zertifizierungsprüfung NSE 5 – Secure Networking (Secure Wireless LAN Administrator) an.</p>
+          <ul>
+            <li>Tobias Kalman</li>
+            <li>Huba Kormany</li>
+            <li>Eliah Haneder</li>
+            <li>Florian Iser</li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <h3 class="goal-group-title">Optionale Ziele</h3>
+    <div class="goal-list">
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">O1</span>
+          <span class="goal-title">Sandbox</span>
+          <span class="goal-status">optional</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Eine Sandbox-Lösung mit FortiSandbox analysiert verdächtige Dateien und potenziell schädliche Inhalte in einer isolierten Umgebung — Bedrohungen werden erkannt, bevor sie das Produktivnetzwerk erreichen.</p>
+          <ul>
+            <li>Aufbau einer isolierten Sandbox-Umgebung</li>
+            <li>Analyse von verdächtigen Dateien und Malware</li>
+            <li>Bewertung des Verhaltens von Dateien</li>
+            <li>Dokumentation der Analyseergebnisse und Klassifizierung der Bedrohungen</li>
+            <li>Anbindung an das SIEM</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">O2</span>
+          <span class="goal-title">Security Orchestration, Automation and Response (SOAR)</span>
+          <span class="goal-status">optional</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Eine SOAR-Lösung wird konzeptionell oder praktisch integriert, um Sicherheitsereignisse aus SIEM, EDR und NDR zu automatisieren, zu korrelieren und standardisierte Reaktionsmaßnahmen auszuführen.</p>
+          <ul>
+            <li>Integration von Sicherheitsereignissen aus SIEM, EDR oder NDR in eine zentrale SOAR-Logik</li>
+            <li>Erstellung automatisierter Playbooks für definierte Sicherheitsvorfälle</li>
+            <li>Umsetzung mindestens eines automatisierten Response-Workflows (z. B. IP-Block oder Host-Isolation)</li>
+            <li>Korrelation und Verarbeitung sicherheitsrelevanter Events aus verschiedenen Quellen</li>
+            <li>Dokumentation und Auswertung der automatisierten Reaktionen</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">O3</span>
+          <span class="goal-title">Secure WLAN</span>
+          <span class="goal-status">optional</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Ein sicheres WLAN-System auf Basis von WPA3 und RADIUS-Authentifizierung kontrolliert den drahtlosen Netzwerkzugang zentral und gewährt nur authentifizierten Benutzern und Geräten Zugriff.</p>
+          <ul>
+            <li>Einrichtung eines WLANs mit WPA3-Verschlüsselung</li>
+            <li>Integration eines RADIUS-Servers zur zentralen Authentifizierung</li>
+            <li>Konfiguration der Benutzer- bzw. Geräteauthentifizierung über RADIUS</li>
+            <li>Einschränkung des WLAN-Zugriffs auf autorisierte Benutzer und Geräte</li>
+            <li>Test der Authentifizierung und Zugriffskontrolle im WLAN</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="goal">
+        <summary>
+          <span class="goal-code">O4</span>
+          <span class="goal-title">Web Application Firewall (WAF)</span>
+          <span class="goal-status">optional</span>
+          <svg class="goal-chevron" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </summary>
+        <div class="goal-body">
+          <p>Eine Web Application Firewall schützt Webanwendungen gezielt vor Angriffen und unerlaubtem Zugriff.</p>
+          <ul>
+            <li>Absicherung von Web-Applikationen durch eine WAF</li>
+            <li>Schutz vor automatisierten Angriffen durch Bot-Mitigation</li>
+            <li>Implementierung von DDoS-Schutzmechanismen für Web-Dienste</li>
+            <li>Absicherung und Kontrolle von API-Zugriffen (API-Security)</li>
+            <li>Test und Validierung der Schutzmechanismen durch Angriffsszenarien</li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <div class="non-goals">
+      <h3>Nicht-Ziele</h3>
+      <ul>
+        <li><span class="ng-code">N1</span> Die Diplomarbeit wird nach Abnahme und Benotung nicht weitergeführt.</li>
+        <li><span class="ng-code">N2</span> Weiterführung und Wartung der UCS-Umgebung liegen außerhalb des Projektumfangs.</li>
+        <li><span class="ng-code">N3</span> Verwendete Geräte werden per Automatisierungsskript in den ursprünglichen Zustand zurückgesetzt.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ARCHITEKTUR -->
+  <section id="architektur" class="section wrap">
+    <div class="section-head">
+      <span class="section-index">§3</span>
+      <h2>Technologiebasis</h2>
+    </div>
+    <p class="section-intro">Die virtualisierte Infrastruktur läuft auf Cisco Systems UCS. Darauf aufbauend kombiniert 4DFence Werkzeuge aus vier Bereichen der Sicherheitsarchitektur.</p>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <span class="tech-label">Virtualisierung</span>
+        <span class="tech-value">Cisco UCS</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Erkennung &amp; Analyse</span>
+        <span class="tech-value">SIEM · EDR · NDR</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Isolation</span>
+        <span class="tech-value">FortiSandbox</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Automatisierung</span>
+        <span class="tech-value">SOAR-Playbooks</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Netzwerkzugang</span>
+        <span class="tech-value">WPA3 · RADIUS</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Webschutz</span>
+        <span class="tech-value">WAF · DDoS · API-Security</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Segmentierung</span>
+        <span class="tech-value">VLANs & ACLs</span>
+      </div>
+      <div class="tech-item">
+        <span class="tech-label">Validierung</span>
+        <span class="tech-value">Angriffs- &amp; Testszenarien</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="section wrap">
+    <div class="section-head">
+      <span class="section-index">§4</span>
+      <h2>Team</h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <span class="team-role">Projektleitung</span>
+        <span class="team-name">Tobias Kalman</span>
+        <span class="team-meta">KAL · <a href="mailto:tobias.kalman@htl.rennweg.at">tobias.kalman@htl.rennweg.at</a></span>
+      </div>
+      <div class="team-card">
+        <span class="team-role">Stv. Projektleitung</span>
+        <span class="team-name">Huba Kormany</span>
+        <span class="team-meta">KOR · <a href="mailto:huba.kormany@htl.rennweg.at">huba.kormany@htl.rennweg.at</a></span>
+      </div>
+      <div class="team-card">
+        <span class="team-role">Projektmitarbeit</span>
+        <span class="team-name">Eliah Haneder</span>
+        <span class="team-meta">HAN · <a href="mailto:eliah.haneder@htl.rennweg.at">eliah.haneder@htl.rennweg.at</a></span>
+      </div>
+      <div class="team-card">
+        <span class="team-role">Projektmitarbeit</span>
+        <span class="team-name">Florian Iser</span>
+        <span class="team-meta">ISE · <a href="mailto:florian.iser@htl.rennweg.at">florian.iser@htl.rennweg.at</a></span>
+      </div>
+    </div>
+
+    <div class="betreuer">
+      <div class="team-card">
+	  <span class="team-role">Hauptbetreuung</span>
+      <span class="team-name">Bernhard Nickel</span>
+	  </div>
+	  <div class="team-card">
+	  <span class="team-role">Hauptbetreuung Stellvertreter</span>
+	  <span class="team-name">Faik Nushi</span>
+	  </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="kontakt" class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <p class="footer-title">4DFence</p>
+      <p class="footer-sub">Implementierung einer modernen, sicheren Netzwerkinfrastruktur</p>
+    </div>
+    <div class="footer-school">
+      <p>Höhere Technische Bundeslehranstalt Wien 3 Rennweg</p>
+      <p>Höhere Abteilung für Informationstechnologie</p>
+      <p>Schuljahr 2026/27</p>
+    </div>
+  </div>
+  <div class="wrap footer-impressum">
+    <img src="assets/4dfence-logo.png" alt="4DFence Logo" class="footer-logo">
+    <p class="footer-legal">4DFence · Diplomarbeit der HTL Wien 3 Rennweg · Betreuung: Bernhard Nickel, Faik Nushi</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
